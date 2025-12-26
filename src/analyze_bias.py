@@ -8,15 +8,15 @@ import numpy as np
 
 
 def analyze_bias_aggregation(json_data: List[Dict[str, Any]]) -> Dict[str, int]:
-    """Считает изоляцию экспертов в малых кластерах."""
+    """Считает изоляцию с ПРАВИЛЬНЫМ total_experts."""
     all_experts = set()
     for method_data in json_data:
         for cluster in method_data['clusters']:
             all_experts.update(cluster['experts'])
+
     total_experts = len(all_experts)
     half_experts = total_experts / 2
-
-    print(f"Всего экспертов: {total_experts}, порог малого кластера: {half_experts}")
+    print(f"Всего экспертов: {total_experts}, порог: <{half_experts}")
 
     expert_isolation_count = defaultdict(int)
     for method_data in json_data:
@@ -24,6 +24,10 @@ def analyze_bias_aggregation(json_data: List[Dict[str, Any]]) -> Dict[str, int]:
             if len(cluster['experts']) < half_experts:
                 for expert in cluster['experts']:
                     expert_isolation_count[expert] += 1
+
+    for expert in all_experts:
+        if expert not in expert_isolation_count:
+            expert_isolation_count[expert] = 0
 
     return dict(sorted(expert_isolation_count.items(), key=lambda x: x[1], reverse=True))
 
