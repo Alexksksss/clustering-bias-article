@@ -1,0 +1,447 @@
+[
+    {
+        "method": "ward",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1",
+                "EXPERT 2",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 2",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.14042853205158223,
+                    0.14920410810159931,
+                    0.14777809523047913,
+                    0.12920512947033408,
+                    0.15239236300913514,
+                    0.1405970787428328,
+                    0.14019396960502759
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    },
+    {
+        "method": "kmeans",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1",
+                "EXPERT 2",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 2",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.14042853205158223,
+                    0.14920410810159931,
+                    0.14777809523047913,
+                    0.12920512947033408,
+                    0.15239236300913514,
+                    0.1405970787428328,
+                    0.14019396960502759
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    },
+    {
+        "method": "gmm",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1",
+                "EXPERT 2",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 2",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.14042853205158223,
+                    0.14920410810159931,
+                    0.14777809523047913,
+                    0.12920512947033408,
+                    0.15239236300913514,
+                    0.1405970787428328,
+                    0.14019396960502759
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    },
+    {
+        "method": "spectral",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 1",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 2",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.11230841030656764,
+                    0.13224557340733906,
+                    0.15042517025662627,
+                    0.14152983578834866,
+                    0.17233516506964408,
+                    0.15239737586060126,
+                    0.13851640174991858
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 2",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.15049999999999997,
+                    0.155,
+                    0.13699999999999998,
+                    0.13,
+                    0.1485,
+                    0.13699999999999998,
+                    0.14150000000000001
+                ]
+            }
+        ]
+    },
+    {
+        "method": "birch",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1",
+                "EXPERT 2",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 2",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.14042853205158223,
+                    0.14920410810159931,
+                    0.14777809523047913,
+                    0.12920512947033408,
+                    0.15239236300913514,
+                    0.1405970787428328,
+                    0.14019396960502759
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    },
+    {
+        "method": "dbscan",
+        "n_clusters": 2,
+        "params": {
+            "eps": 3.0,
+            "min_samples": 1
+        },
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1",
+                "EXPERT 2",
+                "EXPERT 3",
+                "EXPERT 4",
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 1",
+                    "EXPERT 2",
+                    "EXPERT 3",
+                    "EXPERT 4",
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.14042853205158223,
+                    0.14920410810159931,
+                    0.14777809523047913,
+                    0.12920512947033408,
+                    0.15239236300913514,
+                    0.1405970787428328,
+                    0.14019396960502759
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    },
+    {
+        "method": "mean_shift",
+        "n_clusters": 6,
+        "params": {},
+        "explained_variance_ratio": 0.8921828339841016,
+        "clustering_order": {
+            "0": [
+                "EXPERT 6"
+            ],
+            "1": [
+                "EXPERT 1"
+            ],
+            "2": [
+                "EXPERT 3"
+            ],
+            "3": [
+                "EXPERT 4"
+            ],
+            "4": [
+                "EXPERT 2"
+            ],
+            "5": [
+                "EXPERT 5"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "EXPERT 2"
+                ],
+                "vector": [
+                    0.153,
+                    0.153,
+                    0.139,
+                    0.125,
+                    0.153,
+                    0.139,
+                    0.139
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "EXPERT 4"
+                ],
+                "vector": [
+                    0.15,
+                    0.131,
+                    0.155,
+                    0.117,
+                    0.16,
+                    0.146,
+                    0.141
+                ]
+            },
+            {
+                "cluster_id": 2,
+                "experts": [
+                    "EXPERT 5"
+                ],
+                "vector": [
+                    0.148,
+                    0.157,
+                    0.135,
+                    0.135,
+                    0.144,
+                    0.135,
+                    0.144
+                ]
+            },
+            {
+                "cluster_id": 3,
+                "experts": [
+                    "EXPERT 1"
+                ],
+                "vector": [
+                    0.133,
+                    0.142,
+                    0.156,
+                    0.142,
+                    0.151,
+                    0.147,
+                    0.128
+                ]
+            },
+            {
+                "cluster_id": 4,
+                "experts": [
+                    "EXPERT 3"
+                ],
+                "vector": [
+                    0.118,
+                    0.163,
+                    0.154,
+                    0.127,
+                    0.154,
+                    0.136,
+                    0.149
+                ]
+            },
+            {
+                "cluster_id": 5,
+                "experts": [
+                    "EXPERT 6"
+                ],
+                "vector": [
+                    0.045,
+                    0.091,
+                    0.136,
+                    0.182,
+                    0.227,
+                    0.182,
+                    0.136
+                ]
+            }
+        ]
+    }
+]

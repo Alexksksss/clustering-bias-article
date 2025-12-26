@@ -1,0 +1,397 @@
+[
+    {
+        "method": "ward",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            }
+        ]
+    },
+    {
+        "method": "kmeans",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            }
+        ]
+    },
+    {
+        "method": "gmm",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            }
+        ]
+    },
+    {
+        "method": "spectral",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Alex (DM1)",
+                "Dasha (DM3)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Borya (DM2)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Alex (DM1)",
+                    "Dasha (DM3)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.15674574238492775,
+                    0.15349610139786762,
+                    0.13078797508229092,
+                    0.13520125751648504,
+                    0.12480116291657217,
+                    0.14064387195739214,
+                    0.158993649512046
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Borya (DM2)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)"
+                ],
+                "vector": [
+                    0.14425141012689846,
+                    0.14274943255471761,
+                    0.14150043905884768,
+                    0.14799942865399046,
+                    0.138248942682221,
+                    0.13199812022379773,
+                    0.1527528918713802
+                ]
+            }
+        ]
+    },
+    {
+        "method": "birch",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            }
+        ]
+    },
+    {
+        "method": "dbscan",
+        "n_clusters": 2,
+        "params": {
+            "eps": 3.0,
+            "min_samples": 1
+        },
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            }
+        ]
+    },
+    {
+        "method": "mean_shift",
+        "n_clusters": 2,
+        "params": {},
+        "explained_variance_ratio": 1.0,
+        "clustering_order": {
+            "0": [
+                "Borya (DM2)",
+                "Dasha (DM3)",
+                "Egor (DM4)",
+                "Fiona (DM5)",
+                "Gena (DM6)",
+                "Helen (DM7)"
+            ],
+            "1": [
+                "Alex (DM1)"
+            ]
+        },
+        "clusters": [
+            {
+                "cluster_id": 0,
+                "experts": [
+                    "Borya (DM2)",
+                    "Dasha (DM3)",
+                    "Egor (DM4)",
+                    "Fiona (DM5)",
+                    "Gena (DM6)",
+                    "Helen (DM7)"
+                ],
+                "vector": [
+                    0.14250188044721798,
+                    0.14217004069242542,
+                    0.14083383402687077,
+                    0.14849825800670224,
+                    0.13683411231731848,
+                    0.134494220724791,
+                    0.1546665482710945
+                ]
+            },
+            {
+                "cluster_id": 1,
+                "experts": [
+                    "Alex (DM1)"
+                ],
+                "vector": [
+                    0.193,
+                    0.179,
+                    0.113,
+                    0.106,
+                    0.106,
+                    0.143,
+                    0.16
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,29 @@
+{
+    "bias_aggregation": {
+        "Alex (DM1)": 7,
+        "Dasha (DM3)": 1,
+        "Helen (DM7)": 1
+    },
+    "top3_isolated_absolute": {
+        "Alex (DM1)": 7,
+        "Dasha (DM3)": 1,
+        "Helen (DM7)": 1
+    },
+    "critical_bias>65%": {
+        "Alex (DM1)": 7
+    },
+    "normal_experts": {
+        "Dasha (DM3)": 1,
+        "Helen (DM7)": 1
+    },
+    "min_isolation_level": 1,
+    "stats": {
+        "total_methods": 7,
+        "total_experts": 3,
+        "avg_isolation": 3.0,
+        "min_isolation": 1,
+        "max_isolation": 7,
+        "bias_prevalence": 33.3
+    },
+    "timestamp": "20251226_204740"
+}
