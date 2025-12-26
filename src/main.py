@@ -44,8 +44,6 @@ def main(config_path: str):
 
 
 if __name__ == "__main__":
-    import os
-    files = os.listdir('config')
-    print(files)
-    for config_path in files:
-        main(config_path)
+    import sys
+    config_path = sys.argv[1] if len(sys.argv) > 1 else "config/data.json"
+    main(config_path)
