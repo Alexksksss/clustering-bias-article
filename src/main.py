@@ -45,5 +45,5 @@ def main(config_path: str):
 
 if __name__ == "__main__":
     import sys
-    config_path = sys.argv[1] if len(sys.argv) > 1 else "config/data.json"
+    config_path = sys.argv[1] if len(sys.argv) > 1 else "data1_from_article.json"
     main(config_path)

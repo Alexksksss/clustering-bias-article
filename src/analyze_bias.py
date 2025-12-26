@@ -32,30 +32,26 @@ def save_bias_analysis(results: Dict[str, int], base_filename: str) -> str:
     """Сохраняет анализ bias в results/."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # ✅ Точно как просил
-    results_dir = Path("results")
+    results_dir = Path("results-COLAB")
     results_dir.mkdir(parents=True, exist_ok=True)
     filename = results_dir / f"{base_filename}_{timestamp}.json"
 
     total_methods = max(results.values()) if results else 0
-    expert_scores = [(expert, score, score / total_methods * 100) for expert, score in results.items()]
+
     min_isolation = min(results.values()) if results else 0
     normal_experts = {exp: score for exp, score in results.items() if score == min_isolation}
 
-    expert_scores = [(expert, score, score / total_methods * 100) if total_methods > 0 else 0
-                     for expert, score in results.items()]
     analysis_data = {
         "bias_aggregation": results,
 
-        # 🔥 ТОП-3 по абсолютному количеству
+        # ТОП-3 по абсолютному количеству
         "top3_isolated_absolute": dict(sorted(results.items(), key=lambda x: x[1], reverse=True)[:3]),
-        # 🚨 КРИТИЧЕСКИЕ (>65% методов)
+        #  КРИТИЧЕСКИЕ (>65% методов)
         "critical_bias>65%": {exp: score for exp, score in results.items() if score >= total_methods * 0.65},
 
         "normal_experts": normal_experts,
         "min_isolation_level": min_isolation,
 
-        # 📈 СТАТИСТИКА
         "stats": {
             "total_methods": total_methods,
             "total_experts": len(results),

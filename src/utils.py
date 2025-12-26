@@ -20,7 +20,7 @@ def save_json_with_date(data: Any, base_filename: str = "data") -> str:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # ✅ Создаём папку results
-    results_dir = Path("results")
+    results_dir = Path("results-COLAB")
     results_dir.mkdir(parents=True, exist_ok=True)
 
     filename = results_dir / f"{base_filename}_{timestamp}.json"
