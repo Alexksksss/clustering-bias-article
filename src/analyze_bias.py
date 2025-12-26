@@ -69,5 +69,10 @@ def save_bias_analysis(results: Dict[str, int], base_filename: str) -> str:
 
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(analysis_data, f, indent=4, ensure_ascii=False)
-
+    try:
+        from google.colab import files
+        print(f"⬇️ Автоскчивание: {filename.name}")
+        files.download(filename)
+    except ImportError:
+        pass  # Локально не скачиваем
     return str(filename)
