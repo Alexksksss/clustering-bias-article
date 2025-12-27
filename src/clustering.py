@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans, Birch, DBSCAN, MeanShift, OPTICS, SpectralClustering
 from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
 
@@ -147,6 +148,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         model = AgglomerativeClustering(n_clusters=n_clusters, linkage=method)
         labels = model.fit_predict(X_scaled)
         membership = np.zeros((X.shape[0], n_clusters))
+        hard_labels = model.fit_predict(X_scaled)
+        silhouette = silhouette_score(X_scaled, hard_labels)
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
         params = {}
@@ -154,6 +157,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
     elif method == "kmeans":
         kmeans = KMeans(n_clusters=n_clusters, n_init=10, random_state=42)
         labels = kmeans.fit_predict(X_scaled)
+        hard_labels = kmeans.fit_predict(X_scaled)
+        silhouette = silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
@@ -163,6 +168,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         gmm = GaussianMixture(n_components=n_clusters, random_state=42)
         gmm.fit(X_scaled)
         membership = gmm.predict_proba(X_scaled)
+        hard_labels = np.argmax(membership, axis=1)  # жёсткие метки для silhouette
+        silhouette = silhouette_score(X_scaled, hard_labels)
         params = {}
 
     elif method == "spectral":
@@ -173,6 +180,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
             random_state=42
         )
         labels = spec.fit_predict(X_scaled)
+        hard_labels = spec.fit_predict(X_scaled)
+        silhouette = silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
@@ -181,6 +190,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
     elif method == "birch":
         birch = Birch(n_clusters=n_clusters)
         labels = birch.fit_predict(X_scaled)
+        hard_labels = birch.fit_predict(X_scaled)
+        silhouette = silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             if 0 <= label < n_clusters:
@@ -191,27 +202,37 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         labels, k_found, params = adaptive_dbscan(X_scaled, n_clusters)
         unique_labels = sorted(l for l in set(labels) if l != -1)
         label_map = {lab: i for i, lab in enumerate(unique_labels)}
-        hard_labels = np.array([label_map[l] if l != -1 else 0 for l in labels])  # шум -> кластер 0
+        hard_labels = np.array([label_map[l] if l != -1 else -1 for l in labels])  # сохраняем шум как -1
+
+        # Silhouette только для кластеризованных точек (без шума)
+        core_mask = hard_labels != -1
+        if np.sum(core_mask) > 1:
+            silhouette = silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
+        else:
+            silhouette = -1.0  # если все шум
         n_clusters = k_found
         membership = np.zeros((X.shape[0], n_clusters))
         for i, lab in enumerate(hard_labels):
-            if lab < n_clusters:
+            if lab >= 0 and lab < n_clusters:  # исключаем шум из membership
                 membership[i, lab] = 1.0
 
     elif method == "optics":
         labels, k_found, params = adaptive_optics(X_scaled, n_clusters)
         unique_labels = sorted(l for l in set(labels) if l != -1)
         label_map = {lab: i for i, lab in enumerate(unique_labels)}
-        hard_labels = np.array([label_map[l] if l != -1 else 0 for l in labels])
-        n_clusters = k_found
-        membership = np.zeros((X.shape[0], n_clusters))
-        for i, lab in enumerate(hard_labels):
-            if lab < n_clusters:
-                membership[i, lab] = 1.0
+        hard_labels = np.array([label_map[l] if l != -1 else -1 for l in labels])
+        # Silhouette ТОЛЬКО для кластеризованных точек (без шума)
+        core_mask = hard_labels != -1
+        if np.sum(core_mask) > 1:  # минимум 2 точки
+            silhouette = silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
+        else:
+            silhouette = -1.0
 
     elif method == "mean_shift":
         ms = MeanShift()
         labels = ms.fit_predict(X_scaled)
+        hard_labels = ms.fit_predict(X_scaled)
+        silhouette = silhouette_score(X_scaled, hard_labels)
         unique_labels = sorted(set(labels))
         label_map = {lab: i for i, lab in enumerate(unique_labels)}
         hard_labels = np.array([label_map[l] for l in labels])
@@ -225,7 +246,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
     else:
         raise ValueError(f"Неизвестный метод кластеризации: {cluster_method}")
 
-    # Остальной код без изменений (PCA ordering + консенсус)...
+    # (PCA ordering + консенсус)...
     dms_ids = [dm["id"] for dm in dms]
     hard_labels = np.argmax(membership, axis=1)
 
@@ -253,7 +274,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         ordered_experts = [dms_ids[i] for i in member_indices]
         clustering_order[str(order_pos)] = ordered_experts  # строка для JSON
 
-    # Функции консенсуса (без изменений)
+    # Функции консенсуса
     def compute_respect_weights(vectors):
         n = vectors.shape[0]
         weights = np.zeros((n, n))
@@ -286,6 +307,8 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         "n_clusters": int(n_clusters),
         "params": params,
         "explained_variance_ratio": float(pca.explained_variance_ratio_[0]),
+        "silhouette_score": float(silhouette),
+        "silhouette_n_points": int(len(X_scaled)) if silhouette is not None else 0,  # для DBSCAN
         "clustering_order": clustering_order,
         "clusters": []
     }
