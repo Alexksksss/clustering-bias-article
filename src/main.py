@@ -6,7 +6,7 @@ from utils import save_json_with_date, load_config
 def main(config_path: str):
     """Основной пайплайн кластеризации + анализ bias."""
     # Загрузка данных
-    data = load_config(f'config/{config_path}')
+    data = load_config(config_path)
 
     # Определяем оптимальное k
     n_dms = len(data['dms'])
