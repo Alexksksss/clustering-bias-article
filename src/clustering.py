@@ -71,14 +71,28 @@ def find_optimal_k(data, k_min=1, k_max=8, scale=True, random_state=42):
     if scale:
         X = StandardScaler().fit_transform(X)
 
+    n_dms = len(data["dms"])
+    if n_dms < 2:
+        print(f"Мало DMs ({n_dms}), возвращаем k=1")
+        return 1
+
     inertias = []
-    ks = list(range(k_min, k_max + 1))
+    safe_k_max = min(k_max, max(3, n_dms - 1))
+    ks = list(range(k_min, safe_k_max + 1))
     for k in ks:
         km = KMeans(n_clusters=k, n_init=10, random_state=random_state)
         km.fit(X)
         inertias.append(km.inertia_)
 
+    if len(inertias) < 2:
+        print("Недостаточно данных для elbow, возвращаем среднее k")
+        return max(1, len(ks) // 2)
+
     first_diff = np.diff(inertias)
+    if len(first_diff) < 2:
+        print("Недостаточно данных для second_diff, берём k=2")
+        return 2
+
     second_diff = np.diff(first_diff)
 
     # базовый выбор
