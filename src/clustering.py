@@ -6,6 +6,25 @@ from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
 
 
+def safe_silhouette_score(X, labels):
+    """Безопасный silhouette с проверками"""
+    unique_labels = np.unique(labels)
+    n_labels = len(unique_labels)
+    n_samples = len(labels)
+
+    if n_labels < 2:
+        return -1.0, 0
+    if n_labels >= n_samples:
+        return -1.0, 0
+
+    try:
+        score = silhouette_score(X, labels)
+        return float(score), len(labels)
+    except ValueError as e:
+        print(f"Silhouette error: {e}")
+        return -1.0, 0
+
+
 def matrices_to_priorities(data):
     """
     Преобразует матрицы оценок по критериям в векторы глобальных приоритетов экспертов.
@@ -149,7 +168,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         labels = model.fit_predict(X_scaled)
         membership = np.zeros((X.shape[0], n_clusters))
         hard_labels = model.fit_predict(X_scaled)
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
         params = {}
@@ -158,7 +177,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         kmeans = KMeans(n_clusters=n_clusters, n_init=10, random_state=42)
         labels = kmeans.fit_predict(X_scaled)
         hard_labels = kmeans.fit_predict(X_scaled)
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
@@ -169,7 +188,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         gmm.fit(X_scaled)
         membership = gmm.predict_proba(X_scaled)
         hard_labels = np.argmax(membership, axis=1)  # жёсткие метки для silhouette
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         params = {}
 
     elif method == "spectral":
@@ -181,7 +200,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         )
         labels = spec.fit_predict(X_scaled)
         hard_labels = spec.fit_predict(X_scaled)
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             membership[i, label] = 1.0
@@ -191,7 +210,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         birch = Birch(n_clusters=n_clusters)
         labels = birch.fit_predict(X_scaled)
         hard_labels = birch.fit_predict(X_scaled)
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         membership = np.zeros((X.shape[0], n_clusters))
         for i, label in enumerate(labels):
             if 0 <= label < n_clusters:
@@ -207,7 +226,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         # Silhouette только для кластеризованных точек (без шума)
         core_mask = hard_labels != -1
         if np.sum(core_mask) > 1:
-            silhouette = silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
+            silhouette, silhouette_n_points = safe_silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
         else:
             silhouette = -1.0  # если все шум
         n_clusters = k_found
@@ -224,7 +243,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         # Silhouette ТОЛЬКО для кластеризованных точек (без шума)
         core_mask = hard_labels != -1
         if np.sum(core_mask) > 1:  # минимум 2 точки
-            silhouette = silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
+            silhouette, silhouette_n_points = safe_silhouette_score(X_scaled[core_mask], hard_labels[core_mask])
         else:
             silhouette = -1.0
 
@@ -232,7 +251,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         ms = MeanShift()
         labels = ms.fit_predict(X_scaled)
         hard_labels = ms.fit_predict(X_scaled)
-        silhouette = silhouette_score(X_scaled, hard_labels)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
         unique_labels = sorted(set(labels))
         label_map = {lab: i for i, lab in enumerate(unique_labels)}
         hard_labels = np.array([label_map[l] for l in labels])
@@ -308,7 +327,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         "params": params,
         "explained_variance_ratio": float(pca.explained_variance_ratio_[0]),
         "silhouette_score": float(silhouette),
-        "silhouette_n_points": int(len(X_scaled)) if silhouette is not None else 0,  # для DBSCAN
+        "silhouette_n_points": int(silhouette_n_points),
         "clustering_order": clustering_order,
         "clusters": []
     }
