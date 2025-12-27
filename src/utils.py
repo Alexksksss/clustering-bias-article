@@ -3,6 +3,18 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+
+def convert_paths(obj):
+    if isinstance(obj, Path):
+        return str(obj)
+    elif isinstance(obj, dict):
+        return {k: convert_paths(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_paths(item) for item in obj]
+    return obj
+
 
 # Безопасная сериализация
 def convert_paths(obj):
@@ -16,11 +28,10 @@ def convert_paths(obj):
 
 
 def save_json_with_date(data: Any, base_filename: str = "data") -> str:
-    """Сохраняет JSON с датой в папке results."""
+    """Сохраняет JSON с датой в папке results"""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # ✅ Создаём папку results
-    results_dir = Path("results-COLAB")
+    results_dir = PROJECT_ROOT / "results-COLAB"
     results_dir.mkdir(parents=True, exist_ok=True)
 
     filename = results_dir / f"{base_filename}_{timestamp}.json"
@@ -30,6 +41,7 @@ def save_json_with_date(data: Any, base_filename: str = "data") -> str:
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(safe_data, f, indent=4, ensure_ascii=False)
 
+    print(f"💾 СОХРАНЕНО: {filename}")
     return str(filename)
 
 
