@@ -1,2 +1,3 @@
 numpy==2.4.0
 scikit_learn==1.8.0
+scikit-fuzzy

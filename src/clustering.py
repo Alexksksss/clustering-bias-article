@@ -4,6 +4,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
+from skfuzzy import cmeans
 
 
 def safe_silhouette_score(X, labels):
@@ -275,6 +276,27 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
             membership[i, lab] = 1.0
         n_clusters = k_found
         params = {}
+    elif method == "fanny":
+        # FANNY-like fuzzy clustering с fuzziness=2 (memb.exp=2 по умолчанию в fanny)
+        cntr, u_orig, u0, d, jm, p, fpc = cmeans(
+            data=np.transpose(X_scaled),  # skfuzzy ожидает features x samples
+            c=n_clusters,
+            m=2.0,  # fuzziness parameter, аналог memb.exp в fanny
+            error=1e-5,
+            maxiter=1000,
+            init=None,
+            seed=42
+        )
+
+        # membership = u.T для samples x clusters
+        membership = np.fmax(u_orig.T, 1e-10)  # transpose и избежать нулевых
+        membership = membership / np.sum(membership, axis=1, keepdims=True)  # нормализовать если нужно
+
+        # Hard labels для silhouette: argmax
+        hard_labels = np.argmax(membership, axis=1)
+        silhouette, silhouette_n_points = safe_silhouette_score(X_scaled, hard_labels)
+        params = {'fuzziness': 2.0, 'fpc': fpc}  # partition coefficient аналогично fanny$coeff
+
 
     else:
         raise ValueError(f"Неизвестный метод кластеризации: {cluster_method}")

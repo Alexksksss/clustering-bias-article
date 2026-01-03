@@ -16,7 +16,7 @@ def main(config_path: str):
     print(f"Оптимальное k: {k}")
 
     # Все методы кластеризации
-    methods = ['ward', 'kmeans', 'gmm', 'spectral', 'birch', 'dbscan', 'mean_shift']
+    methods = ['fanny', 'ward', 'kmeans', 'gmm', 'spectral', 'birch', 'dbscan', 'mean_shift']
     final_result = []
 
     for method in methods:
