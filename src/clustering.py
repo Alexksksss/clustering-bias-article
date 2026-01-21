@@ -26,6 +26,53 @@ def safe_silhouette_score(X, labels):
         return -1.0, 0
 
 
+def matrices_to_priorities_pca(data):
+    """
+    Преобразует матрицы оценок в векторы глобальных приоритетов экспертов
+    с использованием PCA (1-я главная компонента).
+
+    Args:
+        data: dict с ключами 'alternatives', 'criteria', 'dms', 'parameters'
+
+    Returns:
+        dict в формате {'alternatives': [...], 'dms': [{'id':..., 'scores': [...]}], 'parameters': {...}}
+    """
+    alternatives = data['alternatives']
+    priorities = []
+
+    for dm in data['dms']:
+        dm_id = dm['id']
+        scores_matrix = np.array(dm['scores'])  # shape: (alternatives, criteria)
+
+        # 1. Стандартизация критериев
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(scores_matrix)
+
+        # 2. PCA — первая главная компонента
+        pca = PCA(n_components=1)
+        pc1 = pca.fit_transform(X_scaled).flatten()
+
+        # 3. Делаем значения положительными
+        pc1 = pc1 - pc1.min()
+
+        # 4. Нормализация к сумме 1
+        if pc1.sum() != 0:
+            pc1 = pc1 / pc1.sum()
+
+        priorities.append({
+            'id': dm_id,
+            'scores': np.round(pc1, 3).tolist()
+        })
+
+    params = {k: v for k, v in data['parameters'].items()}
+
+    return {
+        'alternatives': alternatives,
+        'dms': priorities,
+        'parameters': params
+    }
+
+
 def matrices_to_priorities(data):
     """
     Преобразует матрицы оценок по критериям в векторы глобальных приоритетов экспертов.
@@ -67,7 +114,7 @@ def matrices_to_priorities(data):
 
 
 def find_optimal_k(data, k_min=1, k_max=8, scale=True, random_state=42):
-    data = matrices_to_priorities(data)
+    data = matrices_to_priorities_pca(data)
     X = np.array([dm["scores"] for dm in data["dms"]])
     if scale:
         X = StandardScaler().fit_transform(X)
@@ -118,7 +165,7 @@ def clusterization_result_json(data, n_clusters, cluster_method="ward"):
         str: JSON с результатами кластеризации + ordering
     """
     # Извлекаем данные
-    data = matrices_to_priorities(data)
+    data = matrices_to_priorities_pca(data)
     alternatives = data["alternatives"]
     dms = data["dms"]
     X = np.array([dm["scores"] for dm in dms])
